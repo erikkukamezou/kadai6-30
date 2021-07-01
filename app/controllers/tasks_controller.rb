@@ -1,6 +1,6 @@
 class TasksController < ApplicationController
   def index
-    
+    @tasks =Task.all
 
   end
 
@@ -10,13 +10,17 @@ class TasksController < ApplicationController
 
   def create
   Task.create(task_params)
-  redirect_to new_task_path
+  redirect_to tasks_path
+  end
+
+  def show
+    @task = Task.find(params[:id])
   end
 
 
 
   private
   def task_params
-    prams.require(:task).permit(:name, :detail)
+    params.require(:task).permit(:name, :detail)
   end
 end
