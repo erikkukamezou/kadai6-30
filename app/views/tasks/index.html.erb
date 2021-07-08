@@ -1,4 +1,7 @@
+
 <h1>一覧</h1>
+
+<%= link_to "終了期限でソートする", tasks_path(sort_limit: "true") %>
 
 <p><%= notice %></p>
 
@@ -7,12 +10,16 @@
     <tr>
       <th>名前</th>
       <th>詳細</th>
+      <th>終了期限</th>
+      <th>今の状況</th>
     </tr>
 
     <% @tasks.each do |task| %>
   <tr>
       <td><%= task.name %></td>
       <td><%= task.detail %></td>
+      <td><%= task.limit %></td>
+      <td><%= task.status %></td>
       <td><%= link_to '詳細', task_path(task.id) %></td>
       <td><%= link_to '編集', edit_task_path(task.id) %></td>
       <td><%= link_to '削除', task_path(task.id), method: :delete %></td>
@@ -27,3 +34,4 @@
 
 
 <%= link_to '新規作成', new_task_path %>
+<%= link_to '一覧に戻る(作成順に並び替え)', tasks_path %>

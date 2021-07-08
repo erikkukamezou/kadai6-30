@@ -1,14 +1,23 @@
 class TasksController < ApplicationController
   before_action :set_task, only: [:show, :edit, :update, :destroy]
   def index
-    @tasks =Task.all
-    @tasks =Task.order(:created_at)
-    if params[:sort_expired]
-      @tasks = Task.all.order(deadline: :desc)
+    @tasks = Task.all
+    if params[:sort_limit]
+      @tasks = @tasks.order(:limit)
+    else
+      @tasks = @tasks.order(:created_at)
     end
-
-
   end
+
+    # if params[:sort_expired]
+    #   @tasks = Task.all.order(deadline: :desc)
+    # end
+    #
+    # special_task_ids = Task.where.not(limit: nil).pluck(:id)
+    # @special_tasks = Task.where(id: special_task_ids).where('limit >= ?', Date.today)
+
+
+
 
   def new
     @task =Task.new
@@ -52,7 +61,7 @@ class TasksController < ApplicationController
 
   private
   def task_params
-    params.require(:task).permit(:name, :detail)
+    params.require(:task).permit(:name, :detail, :limit, :status)
   end
 
   def set_task
