@@ -7,8 +7,8 @@ class Task < ApplicationRecord
 
   # scope :search, -> { where("search like? OR status like?") }
   # task "/search" => "task#search"
-  scope :search_by_name, ->(params) do where('name LIKE ?', "%#{params[:name]}%")
+  scope :search_by_name, ->(params) do where('name LIKE ?', "%#{params}%")
   end
-  scope :search_by_status, ->(params) do where(status: params[:status])
+  scope :search_by_status, ->(params) do where(status: params)
   end
 end

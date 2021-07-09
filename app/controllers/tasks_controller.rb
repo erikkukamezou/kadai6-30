@@ -16,10 +16,12 @@ class TasksController < ApplicationController
 
 # もし渡されたパラメータがタイトルのみだったとき
       #if params[:task].present?
-      @tasks = @tasks.where('name LIKE ?', "%#{params[:name]}%") if params[:name].present?
+      # @tasks = @tasks.where('name LIKE ?', "%#{params[:name]}%") if params[:name].present?
+      @tasks = @tasks.search_by_name(params[:name]) if params[:name].present?
       # もし渡されたパラメータがステータスのみだったとき
       # @tasks = @tasks.where('status LIKE ?', "%#{params[:status]}%") if params[:status].present?
-      @tasks = @tasks.where(status: params[:status]) if params[:status].present?
+      # @tasks = @tasks.where(status: params[:status]) if params[:status].present?
+      @tasks = @tasks.search_by_status(params[:status]) if params[:status].present?
 # もし渡されたパラメータがタイトルとステータス両方だったとき
 
     #  end
