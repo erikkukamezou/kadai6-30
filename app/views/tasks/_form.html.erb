@@ -12,11 +12,11 @@
   <% end %>
 
   <div class="task_name">
-    <%= form.label :name %>
+    <%= form.label :名前 %>
     <%= form.text_field :name %>
   </div>
   <div class="task_detail">
-    <%= form.label :detail %>
+    <%= form.label :詳細 %>
     <%= form.text_field :detail %>
   </div>
   <div class="task_limit">
@@ -25,8 +25,13 @@
   </div>
   <div class="task_status">
     <%= form.label :今の状況 %>
-    <%= form.select :status,[["未着手","未着手"],["着手","着手"],["完了","完了"]],
+    <%= form.select :status, Task.statuses.keys %>
+    <%#= form.select :status,[["未着手","未着手"],["着手","着手"],["完了","完了"]],
     include_blank: "選択して下さい" %>
+  </div>
+  <div class="task_priority">
+    <%= form.label :優先順位 %>
+    <%= form.select :priority, Task.priorities.keys %>
   </div>
 
   <%= form.submit  name='登録'%>
