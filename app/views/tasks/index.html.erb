@@ -1,18 +1,42 @@
+<h1>検索してもいいよ！</h1>
+  <%= form_with url: tasks_path, method: :get, local: true do |form| %>
+  <div class="task_search">
+    <%= form.label :タイトル検索： %>
+    <%= form.text_field :name %>
+  </div>
+  <div class="task_search">
+    <%= form.label :進捗検索： %>
+    <%= form.select :status, Task.statuses.keys, include_blank: "選択して下さい" %>
+  </div>
+  <%= form.submit :探すよー %>
+  <% end %>
+
+<%= @submits_searched %>
+
 <h1>一覧</h1>
+
+<%= link_to "終了期限で並び替え", tasks_path(sort_limit: "true") %>
+<%= link_to "優先順位で並び替え", tasks_path(sort_priority: "true") %>
 
 <p><%= notice %></p>
 
 <div class ="task_row">
   <table>
     <tr>
-      <th>名前</th>
+      <th>名前だよ</th>
       <th>詳細</th>
+      <th>終了期限</th>
+      <th>今の状況</th>
+      <th>優先順位</th>
     </tr>
 
     <% @tasks.each do |task| %>
   <tr>
       <td><%= task.name %></td>
       <td><%= task.detail %></td>
+      <td><%= task.limit %></td>
+      <td><%= task.status %></td>
+      <td><%= task.priority %></td>
       <td><%= link_to '詳細', task_path(task.id) %></td>
       <td><%= link_to '編集', edit_task_path(task.id) %></td>
       <td><%= link_to '削除', task_path(task.id), method: :delete %></td>
@@ -22,8 +46,9 @@
   </table>
 </div>
 
-
+<%= paginate @tasks %>
 
 
 
 <%= link_to '新規作成', new_task_path %>
+<%= link_to '一覧に戻る(作成順に並び替え)', tasks_path %>
