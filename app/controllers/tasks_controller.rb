@@ -1,13 +1,15 @@
 class TasksController < ApplicationController
   before_action :set_task, only: [:show, :edit, :update, :destroy]
   def index
-    @tasks = Task.all
+    @tasks = Task.all.page(params[:page]).per(5)
+    # @tasks =Task.page(params[:page]).per(PER)
 
-      @tasks = @tasks.order(:limit).page(params[:page]).per(5) if params[:sort_limit]
+
+      @tasks = @tasks.order(:limit) if params[:sort_limit]
 
     # @tasks = Task.all
 
-      @tasks = @tasks.order(:priority).page(params[:page]).per(5) if params[:sort_priority]
+      @tasks = @tasks.order(:priority) if params[:sort_priority]
 
       # @tasks =Task.page(params[:page]).per(5)
     #  else

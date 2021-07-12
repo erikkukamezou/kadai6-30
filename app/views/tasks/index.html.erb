@@ -14,6 +14,8 @@
 <%= @submits_searched %>
 
 <h1>一覧</h1>
+<%= paginate @tasks %>
+
 
 <%= link_to "終了期限で並び替え", tasks_path(sort_limit: "true") %>
 <%= link_to "優先順位で並び替え", tasks_path(sort_priority: "true") %>
@@ -46,7 +48,6 @@
   </table>
 </div>
 
-<%= paginate @tasks %>
 
 
 
