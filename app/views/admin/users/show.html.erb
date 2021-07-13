@@ -1,0 +1,9 @@
+<h1><%= @user.name %>のページ</h1>
+<p>メールアドレス: <%= @user.email %></p>
+
+<% @user.tasks.each do |task| %>
+<p>名前: <%= task.name %></p>
+<p>詳細: <%= task.detail %></p>
+<p>終了期限:<%= task.limit %></p>
+<% end %>
+<%= link_to '一覧に戻る', admin_users_path %>
