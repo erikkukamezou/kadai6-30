@@ -10,6 +10,7 @@ class UsersController < ApplicationController
   # before_action :current_user,   only: [:show]
   # before_action :new_create, only: [:new]
   # before_action :forbid_login_user, only: [:new]
+  before_action :login_user, only: [:new]
 
 
 
@@ -29,12 +30,12 @@ class UsersController < ApplicationController
   def create
     @user =User.new(user_params)
     if @user.save
-      session[:user_id] = @user.id
-      flash[:notice] = "アカウント作成後、ログインしました。"
-      @tasks = current_user.tasks
+      # session[:user_id] = @user.id
+      # flash[:notice] = "アカウント作成後、ログインしました。"
+      # @tasks = current_user.tasks
       redirect_to user_path(@user.id)
     else
-      render :new　
+      render "new"
     end
   end
   def show
@@ -108,4 +109,11 @@ class UsersController < ApplicationController
   #     redirect_to tasks_path
   #   end
   # end
+  def login_user
+    if @user == current_user
+      render :new
+    else
+      redirect_to tasks_path
+    end
+  end
 end
