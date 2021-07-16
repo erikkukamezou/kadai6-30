@@ -1,0 +1,9 @@
+<h3>削除してもいいですか？</h3>
+<%= form_with(model: @user, local: true, url: destroy) do |form| %>
+  <%= form.hidden_field :name %>
+  <%= form.hidden_field :email %>
+  <p>タイトル:<%= @user.name %></p>
+  <p>本文:<%= @user.email %></p>
+  <%= form.submit  "削除する" %>
+  <%= form.submit "戻る" %>
+<% end %>

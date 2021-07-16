@@ -46,6 +46,10 @@ class Admin::UsersController < ApplicationController
     end
   end
 
+  def confirm
+    @user = User.new(user_params)
+  end
+
   private
   def admin_user
     unless current_user.admin?

@@ -7,7 +7,9 @@ Rails.application.routes.draw do
   get 'search' => 'tasks#search'
   # resources :searches,only:[:index]
   resources :users
+  
     namespace :admin do
+
       resources :users, only: [:index, :new, :create, :show, :edit, :update, :destroy] do
       end
     end
