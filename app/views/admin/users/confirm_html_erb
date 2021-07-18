@@ -5,5 +5,5 @@
   <p>タイトル:<%= @user.name %></p>
   <p>本文:<%= @user.email %></p>
   <%= form.submit  "削除する" %>
-  <%= form.submit "戻るよねあ" %>
+  <%= form.submit "戻るよねあお" %>
 <% end %>
