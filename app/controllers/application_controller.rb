@@ -1,4 +1,8 @@
 class ApplicationController < ActionController::Base
+  protect_from_forgery with: :exception
+  include SessionsHelper
+  before_action :login_required
+
   # ロケール振り分けを全てのアクションで実行
   around_action :switch_locale
 
@@ -13,9 +17,7 @@ class ApplicationController < ActionController::Base
     { locale: I18n.locale }
   end
 
-  protect_from_forgery with: :exception
-  include SessionsHelper
-  before_action :login_required
+
   # before_action :redirect_tasks, only: [:new]
   # before_action :current_user, onlhy: [:new]
   # before_action :ensure_current_user, only:[:show, :edit, :update]

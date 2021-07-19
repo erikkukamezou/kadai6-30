@@ -10,7 +10,7 @@ class UsersController < ApplicationController
   # before_action :current_user,   only: [:show]
   # before_action :new_create, only: [:new]
   # before_action :forbid_login_user, only: [:new]
-  before_action :login_user, only: [:new]
+  # before_action :login_user, only: [:new]
 
 
 
@@ -18,8 +18,15 @@ class UsersController < ApplicationController
   #   @tasks = @user.tasks
   # end
 
+
+
+
   def new
-    @user =User.new
+    if logged_in?
+      redirect_to tasks_path, notice: "ログイン済だよ。新規作成できない"
+    else
+      @user = User.new
+    end
     # if unless @user == current_user
     #   redirect_to tasks_path, notice: "登録は一回だけだよ"
     # else
@@ -28,7 +35,7 @@ class UsersController < ApplicationController
     # #
   end
   def create
-    @user =User.new(user_params)
+    @user = User.new(user_params)
     if @user.save
       # session[:user_id] = @user.id
       # flash[:notice] = "アカウント作成後、ログインしました。"
@@ -46,7 +53,7 @@ class UsersController < ApplicationController
     #   redirect_to root_path, notice: "あなたではありません"
     # end
 
-    @user =User.find(params[:id])
+    @user = User.find(params[:id])
     if @user == current_user
       render "show"
     else
@@ -109,11 +116,15 @@ class UsersController < ApplicationController
   #     redirect_to tasks_path
   #   end
   # end
-  def login_user
-    if @user == current_user
-      render :new
-    else
-      redirect_to tasks_path
-    end
-  end
+  # def login_user
+  #   if @user == current_user
+  #     render :new
+  #   else
+  #     redirect_to tasks_path
+  #   end
+  # end
+
+
+
+
 end

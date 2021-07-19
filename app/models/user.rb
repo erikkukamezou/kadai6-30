@@ -11,14 +11,13 @@ class User < ApplicationRecord
       if User.where(admin: true).count == 1 && self.admin
         throw(:abort)
       end
-    end
+  end
 
-    def admin_user_update_action
+  def admin_user_update_action
       @admin_user = User.where(admin: true)
       if (@admin_user.count == 1 && @admin_user.first == self) && !(self.admin)
         throw :abort
-
       end
-    end
+  end
 
 end
