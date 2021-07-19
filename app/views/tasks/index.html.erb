@@ -13,17 +13,20 @@
 
 <%= @submits_searched %>
 
-<h1>一覧</h1>
+<h1>一覧です</h1>
+<%= paginate @tasks %>
+
 
 <%= link_to "終了期限で並び替え", tasks_path(sort_limit: "true") %>
 <%= link_to "優先順位で並び替え", tasks_path(sort_priority: "true") %>
 
-<p><%= notice %></p>
+
 
 <div class ="task_row">
   <table>
     <tr>
-      <th>名前だよ</th>
+      <th>投稿者</th>
+      <th>名前</th>
       <th>詳細</th>
       <th>終了期限</th>
       <th>今の状況</th>
@@ -32,9 +35,10 @@
 
     <% @tasks.each do |task| %>
   <tr>
-      <td><%= task.name %></td>
+      <td><%= task.user.name %></td>
+      <td class = "task_list"><%= task.name %></td>
       <td><%= task.detail %></td>
-      <td><%= task.limit %></td>
+      <td class = "task_row"><%= task.limit %></td>
       <td><%= task.status %></td>
       <td><%= task.priority %></td>
       <td><%= link_to '詳細', task_path(task.id) %></td>
@@ -46,7 +50,6 @@
   </table>
 </div>
 
-<%= paginate @tasks %>
 
 
 

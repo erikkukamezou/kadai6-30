@@ -1,13 +1,16 @@
 class TasksController < ApplicationController
   before_action :set_task, only: [:show, :edit, :update, :destroy]
   def index
-    @tasks = Task.all
+    @tasks = current_user.tasks.page(params[:page]).per(5)
+    # @tasks =Task.page(params[:page]).per(PER)
+    # @tasks = @tasks.current_user.page(params[:page]).per(5)
 
-      @tasks = @tasks.order(:limit).page(params[:page]).per(5) if params[:sort_limit]
+
+      @tasks = @tasks.order(:limit) if params[:sort_limit]
 
     # @tasks = Task.all
 
-      @tasks = @tasks.order(:priority).page(params[:page]).per(5) if params[:sort_priority]
+      @tasks = @tasks.order(:priority) if params[:sort_priority]
 
       # @tasks =Task.page(params[:page]).per(5)
     #  else
@@ -39,16 +42,16 @@ class TasksController < ApplicationController
     # @tasks = @tasks.search(params[:search])
   end
 
-  def search
-    @tasks = Task.search(params[:search])
-    # @keyword = params[:keyword]
-    render "index"
-  end
-
-  def priority
-    @tasks = Task.priority(params[:priority])
-    render "index"
-  end
+  # def search
+  #   @tasks = Task.search(params[:search])
+  #   # @keyword = params[:keyword]
+  #   render "index"
+  # end
+  #
+  # def priority
+  #   @tasks = Task.priority(params[:priority])
+  #   render "index"
+  # end
 
 #   def search
 #     @tasks = Task.search(params[:search, :status])
@@ -70,6 +73,7 @@ class TasksController < ApplicationController
   def create
   # Task.create(task_params)
     @task =Task.new(task_params)
+    @task.user_id = current_user.id
     if @task.save
       redirect_to tasks_path, notice: "新規作成しました！"
     else
