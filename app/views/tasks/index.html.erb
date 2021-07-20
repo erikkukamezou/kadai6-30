@@ -8,6 +8,12 @@
     <%= form.label :進捗検索： %>
     <%= form.select :status, Task.statuses.keys, include_blank: "選択して下さい" %>
   </div>
+
+  <div class="">
+    <%= form.label :ラベル検索： %>
+    <%= form.select("label_id", Label.pluck(:name, :id), { include_blank: true }) %>
+  </div>
+
   <%= form.submit :探すよー %>
   <% end %>
 
@@ -31,6 +37,7 @@
       <th>終了期限</th>
       <th>今の状況</th>
       <th>優先順位</th>
+      <th>ラベル</th>
     </tr>
 
     <% @tasks.each do |task| %>
@@ -41,6 +48,13 @@
       <td class = "task_row"><%= task.limit %></td>
       <td><%= task.status %></td>
       <td><%= task.priority %></td>
+
+      <td>
+        <% task.labels.each do |label| %>
+    
+          <%= label.name %>
+        <% end %>
+      </td>
       <td><%= link_to '詳細', task_path(task.id) %></td>
       <td><%= link_to '編集', edit_task_path(task.id) %></td>
       <td><%= link_to '削除', task_path(task.id), method: :delete %></td>

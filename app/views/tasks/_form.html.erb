@@ -34,6 +34,10 @@
     <%= form.select :priority, Task.priorities.keys %>
   </div>
 
+  <div class="task_label">
+    <%= form.label :ラベルをつける %>
+    <%= form.collection_check_boxes(:label_ids, Label.all, :id, :name) %>
+  </div>
   <%= form.submit  name='登録'%>
 <% end %>
 
