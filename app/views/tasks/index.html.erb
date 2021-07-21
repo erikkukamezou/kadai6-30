@@ -48,10 +48,8 @@
       <td class = "task_row"><%= task.limit %></td>
       <td><%= task.status %></td>
       <td><%= task.priority %></td>
-
       <td>
         <% task.labels.each do |label| %>
-    
           <%= label.name %>
         <% end %>
       </td>

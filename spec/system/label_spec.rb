@@ -1,12 +1,12 @@
 require 'rails_helper'
 RSpec.describe 'ラベル管理機能', type: :system do
   before do
-    @fourth_user = FactoryBot.create(:user)
+    @fourth_user = FactoryBot.create(:fourth_user)
     # # visit new_session_path
     # # fill_in "session[email]", with: "test1111@test.com"
     # # fill_in "session[password]", with: "testtest1111"
     # # click_button "ログイン"
-    # @task = FactoryBot.create(:task)
+    @task = FactoryBot.create(:task)
     @label = FactoryBot.create(:label)
     @label2 = FactoryBot.create(:second_label)
   end
@@ -32,22 +32,27 @@ RSpec.describe 'ラベル管理機能', type: :system do
         check "task_label_ids_1"
         # page.check(task_label_ids_1)
         click_button '登録'
-        expect(page).to have_field '不合格'
+        expect(page).to have_content '不合格'
     end
-
-      it 'ラベルを解除できる' do
-      visit new_session_path
-      fill_in "session[email]", with: "test41@test.com"
-      fill_in "session[password]", with: "testtest41"
-      click_button "ログイン"
-      visit tasks_path
-      uncheck "task[label_ids]", with: '宿題'
-      # all('tbody tr')[0].click_link '削除'
-      expect(page).to have_content '更新しました!'
-      # fill_in ''
-      # click_button ''
-      # expect(page).to have_content ''
-      end
+    #
+    #   it 'ラベルを解除できる' do
+    #     visit new_session_path
+    #     fill_in "session[email]", with: "test41@test.com"
+    #     fill_in "session[password]", with: "testtest41"
+    #     click_button "ログイン"
+    #     # visit tasks_path
+    #     # uncheck "task[label_ids]", with: '宿題'
+    #     # visit tasks_path(@task)
+    #     # visit edit_task_path(id: @task.id)
+    #     visit edit_task_path(task.id)
+    #     all('tbody tr')[0].all('td').click_link '編集'
+    #     uncheck "task_label_ids_1"
+    #     click_button '登録'
+    #     expect(page).to have_content '更新しました!'
+    #     # fill_in ''
+    #     # click_button ''
+    #     # expect(page).to have_content ''
+    #   end
     end
 
     context 'ラベル検索をした場合' do
@@ -58,7 +63,7 @@ RSpec.describe 'ラベル管理機能', type: :system do
         click_button "ログイン"
         visit tasks_path
         # check "label_id", with: '不合格'
-        select '不合格', from: "task_label_id"
+        select '不合格', from: "label_id"
         click_button '探すよー'
         expect(page).to have_content '不合格'
       end
