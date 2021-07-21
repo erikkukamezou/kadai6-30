@@ -23,4 +23,20 @@ FactoryBot.define do
     password_confirmation {'testtest31'}
     admin {false}
   end
+  factory :fourth_user, class: User do
+    id {104}
+    name { 'test41' }
+    email { 'test41@test.com' }
+    password {'testtest41'}
+    password_confirmation {'testtest41'}
+    admin {false}
+  end
+  factory :fifth_user, class: User do
+    id {105}
+    name { 'test51' }
+    email { 'test51@test.com' }
+    password {'testtest51'}
+    password_confirmation {'testtest51'}
+    admin {false}
+  end
 end

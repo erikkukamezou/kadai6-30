@@ -1,7 +1,10 @@
 class TasksController < ApplicationController
   before_action :set_task, only: [:show, :edit, :update, :destroy]
   def index
+    # @label_list = Label.all
     @tasks = current_user.tasks.page(params[:page]).per(5)
+    @tasks = @tasks.joins(:labels).where(labels: { id: params[:label_id] }) if params[:label_id].present?
+    # @tasks = @tasks.joins(:labels).where(labels: { id: params[:label_id] }) if params[:label_id].present?
     # @tasks =Task.page(params[:page]).per(PER)
     # @tasks = @tasks.current_user.page(params[:page]).per(5)
 
@@ -67,14 +70,23 @@ class TasksController < ApplicationController
     # special_task_ids = Task.where.not(limit: nil).pluck(:id)
     # @special_tasks = Task.where(id: special_task_ids).where('limit >= ?', Date.today)
   def new
-    @task =Task.new
+    @task = Task.new
+    # @labels=Label.all
   end
 
   def create
   # Task.create(task_params)
-    @task =Task.new(task_params)
+    @task = Task.new(task_params)
+    # @label_ids = params[:task][:label_ids]
+    # @label_ids.shift
+    # label_list = params[:task][:label_list].split(",")
     @task.user_id = current_user.id
     if @task.save
+     # @label_ids.each do |labe_id|
+     #   label = Label.find(label_id.to_i)
+     #   @task.labels << label
+     # end
+      # @task.label_save(label_list)
       redirect_to tasks_path, notice: "新規作成しました！"
     else
        render :new
@@ -83,6 +95,7 @@ class TasksController < ApplicationController
 
   def show
     # @task = Task.find(params[:id])
+    # @task_labels = @task.labels
   end
 
   def edit
@@ -113,7 +126,7 @@ class TasksController < ApplicationController
 
   private
   def task_params
-    params.require(:task).permit(:name, :detail, :limit, :status, :search, :priority)
+    params.require(:task).permit(:name, :detail, :limit, :status, :search, :priority, { label_ids: [] })
   end
 
   def set_task

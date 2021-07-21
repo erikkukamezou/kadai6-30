@@ -21,8 +21,12 @@ RSpec.describe 'ユーザーの登録', type: :system do
           fill_in 'user[password]', with: 'testtest12'
           fill_in 'user[password_confirmation]', with: 'testtest12'
           click_button '登録するよ'
+          visit new_session_path
+          fill_in "session[email]", with: "test12@test.com"
+          fill_in "session[password]", with: "testtest12"
+          click_button 'ログイン'
           # expect(page).to have_content '#{name}のページ'
-          expect(page).to have_content 'test12'
+          expect(page).to have_content 'test12@test.com'
         end
     end
       context 'ユーザがログインせずタスク一覧画面に飛ぼうとしたとき' do
